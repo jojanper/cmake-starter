@@ -79,3 +79,17 @@ endfunction()
 function(install_target_files destination target)
   install(FILES ${target} DESTINATION ${destination})
 endfunction()
+
+# Build unit test binary.
+#
+# test_name - Test binary name
+# test_src  - Sources
+# link_libs - Additional link libraries
+function(build_unittest test_name test_srcs link_libs)
+  add_executable(${test_name} ${test_srcs})
+  target_link_libraries(${test_name} ${link_libs} ${GTEST_ALL_LIBS})
+  add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${test_name}>)
+  set_target_properties(${test_name} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
+  )
+endfunction()
