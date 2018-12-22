@@ -93,3 +93,21 @@ function(build_unittest test_name test_srcs link_libs)
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
   )
 endfunction()
+
+# Build target binary.
+#
+# test_name    - Binary name
+# test_src     - Sources
+# link_libs    - Additional link libraries
+# compile_defs - Compilation definitions, if any
+function(build_exe exe_name exe_srcs link_libs compile_defs)
+  message("exe: ${exe_srcs}")
+  add_executable(${exe_name} ${exe_srcs})
+  target_link_libraries(${exe_name} ${link_libs})
+  set_target_properties(${exe_name} PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
+    LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
+    ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
+    COMPILE_DEFINITIONS "${compile_defs}"
+  )
+endfunction()
