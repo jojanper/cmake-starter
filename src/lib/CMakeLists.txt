@@ -1,9 +1,12 @@
-set(LIBNAME "cdraaloptions")
+set(LIBNAME "cdraaloptions_object")
+set(LIBNAME_STATIC "cdraaloptions_static")
+set(LIBNAME_SHARED "cdraaloptions")
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../api)
 
 set(HDRS
   ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/options.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/lib_export.h
 )
 
 set(SRCS
@@ -13,22 +16,13 @@ set(SRCS
 set(EXTRA_LINK_LIBRARIES
 )
 
-add_library(${LIBNAME} STATIC ${HDRS} ${SRCS})
-target_link_libraries(${LIBNAME} ${EXTRA_LINK_LIBRARIES})
-set_target_properties(${LIBNAME} PROPERTIES
-  ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
-)
+set(OBJECT_SRCS ${HDRS} ${SRCS})
+build_object_library("${LIBNAME}" "${OBJECT_SRCS}")
 
-install(TARGETS ${LIBNAME}
-  ARCHIVE
-  RUNTIME DESTINATION bin
-  LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib
-)
+set(LIB_SRCS ${HDRS} $<TARGET_OBJECTS:${LIBNAME}>)
+build_static_library("${LIBNAME_STATIC}" "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
+build_shared_library("${LIBNAME_SHARED}" "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
 
-install(FILES
-  ${HDRS}
-  DESTINATION include/cdraaloptions
-)
-
-strip_library(${LIBNAME})
+install_target_binary("${LIBNAME_STATIC}")
+install_target_binary("${LIBNAME_SHARED}")
+install_target_files("include/cdraaloptions" "${HDRS}")

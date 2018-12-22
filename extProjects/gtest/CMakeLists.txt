@@ -29,9 +29,9 @@ add_library(gtest_main STATIC IMPORTED GLOBAL)
 set_target_properties(gtest_main PROPERTIES IMPORTED_LOCATION_RELEASE ${GTEST_LIBS_DIR}/ReleaseLibs/libgtest_main.a)
 set_target_properties(gtest_main PROPERTIES IMPORTED_LOCATION_DEBUG ${GTEST_LIBS_DIR}/DebugLibs/libgtest_maind.a)
 
-set (GTEST_ALL_LIBS "")
+set(GTEST_ALL_LIBS "")
 if (CMAKE_USE_PTHREADS_INIT)
-  set (GTEST_ALL_LIBS ${CMAKE_THREAD_LIBS_INIT})
+  set(GTEST_ALL_LIBS ${CMAKE_THREAD_LIBS_INIT})
 endif(CMAKE_USE_PTHREADS_INIT)
 
 # Expose these variables to parent scope

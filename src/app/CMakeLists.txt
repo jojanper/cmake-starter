@@ -15,7 +15,7 @@ add_executable(${APPNAME}
 )
 
 target_link_libraries(${APPNAME}
-  cdraaloptions
+  cdraaloptions_static
 )
 
 set_target_properties(${APPNAME} PROPERTIES

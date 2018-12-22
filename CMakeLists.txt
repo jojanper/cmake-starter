@@ -13,6 +13,7 @@ include(CheckIncludeFiles)
 include(CheckIncludeFileCXX)
 include(${PROJECT_SOURCE_DIR}/cmake/cxxflags.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/strip.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/library.cmake)
 
 option(BUILD_TESTS "Build gtest unit tests" ON)
 option(HAVE_THREADS "Use pthread in tests" ON)
@@ -47,6 +48,9 @@ set(CPACK_PACKAGE_VENDOR "Juha Ojanperä")
 set(CPACK_PACKAGE_CONTACT "juha.ojanpera@gmail.com")
 set(CPACK_PACKAGE_FILE_NAME ${PACKAGE_NAME})
 set(CPACK_GENERATOR "ZIP")
+set(CPACK_STRIP_FILES TRUE)
+set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
+set(CPACK_COMPONENTS_ALL_IN_ONE_PACKAGE ON)
 include(CPack)
 
 # Show system settings

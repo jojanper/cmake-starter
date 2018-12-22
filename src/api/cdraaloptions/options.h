@@ -1,6 +1,8 @@
+#include "cdraaloptions/lib_export.h"
+
 namespace cdraal {
 
-class Options
+class CDRAAL_PUBLIC Options
 {
 public:
     Options() {}
