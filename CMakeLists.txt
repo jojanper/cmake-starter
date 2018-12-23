@@ -5,24 +5,19 @@ set(VERSION_MAJOR 0)
 set(VERSION_MINOR 1)
 set(VERSION_PATCH 0)
 
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
 include(CheckFunctionExists)
 include(CheckIncludeFiles)
 include(CheckIncludeFileCXX)
 include(${PROJECT_SOURCE_DIR}/cmake/cxxflags.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/strip.cmake)
 include(${PROJECT_SOURCE_DIR}/cmake/library.cmake)
+include(${PROJECT_SOURCE_DIR}/cmake/config.cmake)
 
+option(BUILD_APPS "Build test apps" ON)
 option(BUILD_TESTS "Build gtest unit tests" ON)
-option(HAVE_THREADS "Use pthread in tests" ON)
+option(HAVE_THREADS "Use pthread in unit tests" ON)
 
 set(EXT_PROJECTS_DIR ${PROJECT_SOURCE_DIR}/extProjects)
-
-if(HAVE_THREADS)
-  add_definitions(-DHAVE_THREADS)
-endif(HAVE_THREADS)
 
 # Unit testing: gtest as external component
 if(BUILD_TESTS)
@@ -49,8 +44,10 @@ set(CPACK_PACKAGE_CONTACT "juha.ojanpera@gmail.com")
 set(CPACK_PACKAGE_FILE_NAME ${PACKAGE_NAME})
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_STRIP_FILES TRUE)
+set(CPACK_COMPONENTS_ALL static shared)
 set(CPACK_ARCHIVE_COMPONENT_INSTALL ON)
-set(CPACK_COMPONENTS_ALL_IN_ONE_PACKAGE ON)
+set(CPACK_COMPONENT_STATIC_GROUP "static")
+set(CPACK_COMPONENT_SHARED_GROUP "so")
 include(CPack)
 
 # Show system settings

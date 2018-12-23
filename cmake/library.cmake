@@ -44,12 +44,12 @@ endfunction()
 # Install target.
 #
 # target - Target item
-function(install_target_binary target)
+function(install_target_binary target component)
   install(TARGETS ${target}
-    ARCHIVE
-    RUNTIME DESTINATION bin
-    LIBRARY DESTINATION lib
-    ARCHIVE DESTINATION lib
+    LIBRARY
+    RUNTIME DESTINATION bin COMPONENT ${component}
+    LIBRARY DESTINATION lib COMPONENT ${component}
+    ARCHIVE DESTINATION lib COMPONENT ${component}
   )
 endfunction()
 
@@ -57,8 +57,10 @@ endfunction()
 #
 # destination - Destination name
 # target      - Target file(s)
-function(install_target_files destination target)
-  install(FILES ${target} DESTINATION ${destination})
+function(install_target_files destination target component)
+  install(FILES ${target}
+    DESTINATION ${destination} COMPONENT ${component}
+  )
 endfunction()
 
 # Build unit test binary.
@@ -82,7 +84,6 @@ endfunction()
 # link_libs    - Additional link libraries
 # compile_defs - Compilation definitions, if any
 function(build_exe exe_name exe_srcs link_libs compile_defs)
-  message("exe: ${exe_srcs}")
   add_executable(${exe_name} ${exe_srcs})
   target_link_libraries(${exe_name} ${link_libs})
   set_target_properties(${exe_name} PROPERTIES

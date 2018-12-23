@@ -20,9 +20,11 @@ set(OBJECT_SRCS ${HDRS} ${SRCS})
 build_object_library("${LIBNAME}" "${OBJECT_SRCS}")
 
 set(LIB_SRCS ${HDRS} $<TARGET_OBJECTS:${LIBNAME}>)
-build_static_library("${LIBNAME_STATIC}" "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
-build_shared_library("${LIBNAME_SHARED}" "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
 
-install_target_binary("${LIBNAME_STATIC}")
-install_target_binary("${LIBNAME_SHARED}")
-install_target_files("include/cdraaloptions" "${HDRS}")
+build_shared_library(${LIBNAME_SHARED} "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
+install_target_binary(${LIBNAME_SHARED} shared)
+install_target_files("include/cdraaloptions" "${HDRS}" shared)
+
+build_static_library(${LIBNAME_STATIC} "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
+install_target_binary(${LIBNAME_STATIC} static)
+install_target_files("include/cdraaloptions" "${HDRS}" static)
