@@ -5,10 +5,12 @@ include(CheckFunctionExists)
 include(CheckIncludeFiles)
 include(CheckIncludeFileCXX)
 
-include(${PROJECT_SOURCE_DIR}/cmake/cxxflags.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/strip.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/library.cmake)
-include(${PROJECT_SOURCE_DIR}/cmake/config.cmake)
+# Load all cmake modules
+file(GLOB cmakeFiles ${CMAKE_SOURCE_DIR}/cmake/*.cmake)
+foreach(cmakeFile ${cmakeFiles})
+  message("-- Include ${cmakeFile}")
+  include(${cmakeFile})
+endforeach(cmakeFile)
 
 # Project specific config
 include(${PROJECT_SOURCE_DIR}/projectConfig.cmake)
