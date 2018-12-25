@@ -18,17 +18,21 @@ ExternalProject_Add(
 ExternalProject_Get_Property(googletest source_dir)
 set(GTEST_INCLUDE_DIRS ${source_dir}/googletest/include)
 
-# Specify MainTest's link libraries
+# Specify link libraries
 ExternalProject_Get_Property(googletest binary_dir)
 set(GTEST_LIBS_DIR ${binary_dir}/googlemock/gtest)
 
-add_library(gtest STATIC IMPORTED GLOBAL)
-set_target_properties(gtest PROPERTIES IMPORTED_LOCATION_RELEASE ${GTEST_LIBS_DIR}/ReleaseLibs/libgtest.a)
-set_target_properties(gtest PROPERTIES IMPORTED_LOCATION_DEBUG ${GTEST_LIBS_DIR}/DebugLibs/libgtestd.a)
+create_static_lib_export(
+  gtest
+  ${GTEST_LIBS_DIR}/ReleaseLibs/libgtest.a
+  ${GTEST_LIBS_DIR}/DebugLibs/libgtestd.a
+)
 
-add_library(gtest_main STATIC IMPORTED GLOBAL)
-set_target_properties(gtest_main PROPERTIES IMPORTED_LOCATION_RELEASE ${GTEST_LIBS_DIR}/ReleaseLibs/libgtest_main.a)
-set_target_properties(gtest_main PROPERTIES IMPORTED_LOCATION_DEBUG ${GTEST_LIBS_DIR}/DebugLibs/libgtest_maind.a)
+create_static_lib_export(
+  gtest_main
+  ${GTEST_LIBS_DIR}/ReleaseLibs/libgtest_main.a
+  ${GTEST_LIBS_DIR}/DebugLibs/libgtest_maind.a
+)
 
 set(GTEST_ALL_LIBS "")
 if (CMAKE_USE_PTHREADS_INIT)
@@ -36,5 +40,6 @@ if (CMAKE_USE_PTHREADS_INIT)
 endif(CMAKE_USE_PTHREADS_INIT)
 
 # Expose these variables to parent scope
+set(GTEST_LIBS gtest ${GTEST_ALL_LIBS} PARENT_SCOPE)
 set(GTEST_ALL_LIBS gtest gtest_main ${GTEST_ALL_LIBS} PARENT_SCOPE)
 set(GTEST_INCLUDE_DIRS ${GTEST_INCLUDE_DIRS} PARENT_SCOPE)

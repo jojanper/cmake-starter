@@ -93,3 +93,14 @@ function(build_exe exe_name exe_srcs link_libs compile_defs)
     COMPILE_DEFINITIONS "${compile_defs}"
   )
 endfunction()
+
+# Create static library from 3rd party (static) library
+#
+# lib_name    - Name of target library
+# release_lib - Release lib path
+# debug_lib   - Debug lib path
+function(create_static_lib_export lib_name release_lib debug_lib)
+  add_library(${lib_name} STATIC IMPORTED GLOBAL)
+  set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION_RELEASE ${release_lib})
+  set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION_DEBUG ${debug_lib})
+endfunction()
