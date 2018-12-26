@@ -1,7 +1,5 @@
 set(APPNAME optionsapp)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../api)
-
 set(HDRS
 )
 

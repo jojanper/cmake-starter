@@ -1,3 +1,6 @@
+# Public API
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/api)
+
 add_subdirectory(lib)
 
 if(BUILD_APPS)

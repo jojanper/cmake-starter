@@ -11,23 +11,33 @@ endfunction()
 
 # Create static library.
 #
-# lib_name  - Name of library
-# lib_srcs  - Library sources
-# link_libs - Additional link libraries
-function(build_static_library lib_name lib_srcs link_libs)
+# lib_name       - Name of library
+# lib_srcs       - Library sources
+# link_libs      - Additional link libraries
+# build_includes - Include directories for building the library
+function(build_static_library lib_name lib_srcs link_libs build_includes)
   add_library(${lib_name} STATIC ${lib_srcs})
   set_target_properties(${lib_name} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
   )
   target_link_libraries(${lib_name} ${link_libs})
+
+  # Include directories for the target; both public and internal
+  target_include_directories(${lib_name}
+    PUBLIC
+      $<INSTALL_INTERFACE:include>
+    PRIVATE
+      ${build_includes}
+  )
 endfunction()
 
 # Create shared library.
 #
-# lib_name  - Name of library
-# lib_srcs  - Library sources
-# link_libs - Additional link libraries
-function(build_shared_library lib_name lib_srcs link_libs)
+# lib_name       - Name of library
+# lib_srcs       - Library sources
+# link_libs      - Additional link libraries
+# build_includes - Include directories for building the library
+function(build_shared_library lib_name lib_srcs link_libs build_includes)
   add_library(${lib_name} SHARED ${lib_srcs})
   set_target_properties(${lib_name} PROPERTIES
     COMPILE_DEFINITIONS "SHARED_LIBRARY"
@@ -38,18 +48,35 @@ function(build_shared_library lib_name lib_srcs link_libs)
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
   )
   target_link_libraries(${lib_name} PRIVATE ${link_libs})
+
+  # Include directories for the target; both public and internal
+  target_include_directories(${lib_name}
+    PUBLIC
+      $<INSTALL_INTERFACE:include>
+    PRIVATE
+      ${build_includes}
+  )
   strip_library(${lib_name})
 endfunction()
 
 # Install target.
 #
-# target - Target item
-function(install_target_binary target component)
+# target       - Target item
+# component    - Install component name
+# export_cmake - Export target script name
+function(install_target_binary target component export_cmake)
   install(TARGETS ${target}
-    LIBRARY
+    # Register the installed target to exports
+    EXPORT ${target}-targets
     RUNTIME DESTINATION bin COMPONENT ${component}
     LIBRARY DESTINATION lib COMPONENT ${component}
     ARCHIVE DESTINATION lib COMPONENT ${component}
+  )
+
+  # Export the target to a .cmake script
+  install(EXPORT ${target}-targets
+    FILE ${export_cmake}.cmake
+    DESTINATION cmake COMPONENT ${component}
   )
 endfunction()
 

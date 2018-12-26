@@ -2,8 +2,6 @@ set(LIBNAME "cdraaloptions_obj")
 set(LIBNAME_STATIC "cdraaloptions_static")
 set(LIBNAME_SHARED "cdraaloptions")
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../api)
-
 set(HDRS
   ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/options.h
   ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/lib_export.h
@@ -23,11 +21,19 @@ build_object_library("${LIBNAME}" "${OBJECT_SRCS}")
 set(LIB_SRCS ${HDRS} $<TARGET_OBJECTS:${LIBNAME}>)
 
 # Shared library is installed to shared package
-build_shared_library(${LIBNAME_SHARED} "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
-install_target_binary(${LIBNAME_SHARED} shared)
+build_shared_library(${LIBNAME_SHARED}
+  "${LIB_SRCS}"
+  "${EXTRA_LINK_LIBRARIES}"
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+install_target_binary(${LIBNAME_SHARED} shared CDraalOptionsSharedConfig)
 install_target_files("include/cdraaloptions" "${HDRS}" shared)
 
 # Static library is installed to static package
-build_static_library(${LIBNAME_STATIC} "${LIB_SRCS}" "${EXTRA_LINK_LIBRARIES}" TRUE)
-install_target_binary(${LIBNAME_STATIC} static)
+build_static_library(${LIBNAME_STATIC}
+  "${LIB_SRCS}"
+  "${EXTRA_LINK_LIBRARIES}"
+  ${CMAKE_CURRENT_SOURCE_DIR}
+)
+install_target_binary(${LIBNAME_STATIC} static CDraalOptionsStaticConfig)
 install_target_files("include/cdraaloptions" "${HDRS}" static)
