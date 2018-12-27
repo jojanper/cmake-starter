@@ -16,6 +16,7 @@ else()
 endif(SHARED_PACKAGE)
 
 # Find library settings from installed scripts
+message("Prefix: ${PACKAGE_PREFIX}")
 set(${TARGET}_DIR "${PACKAGE_PREFIX}/cmake")
 find_package(${TARGET} REQUIRED)
 
