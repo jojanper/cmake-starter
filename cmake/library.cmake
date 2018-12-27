@@ -64,7 +64,8 @@ endfunction()
 # target       - Target item
 # component    - Install component name
 # export_cmake - Export target script name
-function(install_target_binary target component export_cmake)
+# namespace    - Prefix for imported targets
+function(install_target_binary target component export_cmake namespace)
   install(TARGETS ${target}
     # Register the installed target to exports
     EXPORT ${target}-targets
@@ -76,6 +77,7 @@ function(install_target_binary target component export_cmake)
   # Export the target to a .cmake script
   install(EXPORT ${target}-targets
     FILE ${export_cmake}.cmake
+    NAMESPACE ${namespace}
     DESTINATION cmake COMPONENT ${component}
   )
 endfunction()

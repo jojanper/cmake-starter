@@ -26,7 +26,7 @@ build_shared_library(${LIBNAME_SHARED}
   "${EXTRA_LINK_LIBRARIES}"
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
-install_target_binary(${LIBNAME_SHARED} shared CDraalOptionsSharedConfig)
+install_target_binary(${LIBNAME_SHARED} shared CDraalOptionsSharedConfig CDraal::)
 install_target_files("include/cdraaloptions" "${HDRS}" shared)
 
 # Static library is installed to static package
@@ -35,5 +35,5 @@ build_static_library(${LIBNAME_STATIC}
   "${EXTRA_LINK_LIBRARIES}"
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
-install_target_binary(${LIBNAME_STATIC} static CDraalOptionsStaticConfig)
+install_target_binary(${LIBNAME_STATIC} static CDraalOptionsStaticConfig CDraal::)
 install_target_files("include/cdraaloptions" "${HDRS}" static)
