@@ -4,11 +4,13 @@ set(LIBNAME_SHARED "cdraaloptions")
 
 set(HDRS
   ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/options.h
+  ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/options-c.h
   ${CMAKE_CURRENT_SOURCE_DIR}/../api/cdraaloptions/lib_export.h
 )
 
 set(SRCS
    options.cpp
+   lib_wrapper.cpp
 )
 
 set(EXTRA_LINK_LIBRARIES
