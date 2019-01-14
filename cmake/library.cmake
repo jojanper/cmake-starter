@@ -133,3 +133,14 @@ function(create_static_lib_export lib_name release_lib debug_lib)
   set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION_RELEASE ${release_lib})
   set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION_DEBUG ${debug_lib})
 endfunction()
+
+# Create shared library from 3rd party (shared) library
+#
+# lib_name    - Name of target library
+# release_lib - Release lib path
+# debug_lib   - Debug lib path
+function(create_shared_lib_export lib_name release_lib debug_lib)
+  add_library(${lib_name} SHARED IMPORTED GLOBAL)
+  set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION_RELEASE ${release_lib})
+  set_target_properties(${lib_name} PROPERTIES IMPORTED_LOCATION_DEBUG ${debug_lib})
+endfunction()
