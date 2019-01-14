@@ -1,14 +1,14 @@
 const ffi = require('ffi');
 const { types } = require('ref');
 
-const Pointer = 'pointer';
+const PointerType = 'pointer';
 
 const buildFolder = process.argv.slice(2)[0];
 
 // Define the API mapping
 const api = ffi.Library(`${buildFolder}/lib/libcdraaloptions.so`, {
-    CDraalOpenOptions: [Pointer, []],
-    CDraalCloseOptions: [types.void, [Pointer]]
+    CDraalOpenOptions: [PointerType, []],
+    CDraalCloseOptions: [types.void, [PointerType]]
 });
 
 // Open handle
