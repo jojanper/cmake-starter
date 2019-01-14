@@ -17,7 +17,7 @@ cmake --build . --config ${BUILD_TYPE}
 objdump -T lib/libcdraaloptions.so
 
 # Test node integration
-node index
+node ../index .
 
 # Create install package
 cpack -C ${BUILD_TYPE}
