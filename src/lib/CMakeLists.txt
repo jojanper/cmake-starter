@@ -16,9 +16,11 @@ set(SRCS
 set(EXTRA_LINK_LIBRARIES
 )
 
+set(DEFINES FLAG1 FLAG2=2)
+
 # Create object library (as intermediate target)
 set(OBJECT_SRCS ${HDRS} ${SRCS})
-build_object_library("${LIBNAME}" "${OBJECT_SRCS}")
+build_object_library("${LIBNAME}" "${OBJECT_SRCS}" "${DEFINES}")
 
 set(LIB_SRCS ${HDRS} $<TARGET_OBJECTS:${LIBNAME}>)
 
@@ -27,6 +29,7 @@ build_shared_library(${LIBNAME_SHARED}
   "${LIB_SRCS}"
   "${EXTRA_LINK_LIBRARIES}"
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ""
 )
 install_target_binary(${LIBNAME_SHARED} shared CDraalOptionsSharedConfig CDraal::)
 install_target_files("include/cdraaloptions" "${HDRS}" shared)
@@ -36,6 +39,7 @@ build_static_library(${LIBNAME_STATIC}
   "${LIB_SRCS}"
   "${EXTRA_LINK_LIBRARIES}"
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ""
 )
 install_target_binary(${LIBNAME_STATIC} static CDraalOptionsStaticConfig CDraal::)
 install_target_files("include/cdraaloptions" "${HDRS}" static)

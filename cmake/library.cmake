@@ -2,11 +2,13 @@
 #
 # lib_name - Name of library
 # lib_srcs - Library sources
-function(build_object_library lib_name lib_srcs)
+# defines  - Private defines
+function(build_object_library lib_name lib_srcs defines)
   add_library(${lib_name} OBJECT ${lib_srcs})
   set_target_properties(${lib_name} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
   )
+  target_compile_definitions(${lib_name} PRIVATE ${defines})
 endfunction()
 
 # Create static library.
@@ -15,12 +17,15 @@ endfunction()
 # lib_srcs       - Library sources
 # link_libs      - Additional link libraries
 # build_includes - Include directories for building the library
-function(build_static_library lib_name lib_srcs link_libs build_includes)
+# defines        - Private defines
+function(build_static_library lib_name lib_srcs link_libs build_includes defines)
   add_library(${lib_name} STATIC ${lib_srcs})
   set_target_properties(${lib_name} PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib
   )
   target_link_libraries(${lib_name} ${link_libs})
+
+  target_compile_definitions(${lib_name} PRIVATE ${defines})
 
   # Include directories for the target; both public and internal
   target_include_directories(${lib_name}
@@ -37,7 +42,8 @@ endfunction()
 # lib_srcs       - Library sources
 # link_libs      - Additional link libraries
 # build_includes - Include directories for building the library
-function(build_shared_library lib_name lib_srcs link_libs build_includes)
+# defines        - Private defines
+function(build_shared_library lib_name lib_srcs link_libs build_includes defines)
   add_library(${lib_name} SHARED ${lib_srcs})
   set_target_properties(${lib_name} PROPERTIES
     COMPILE_DEFINITIONS "SHARED_LIBRARY"
@@ -48,6 +54,7 @@ function(build_shared_library lib_name lib_srcs link_libs build_includes)
     RUNTIME_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/bin
   )
   target_link_libraries(${lib_name} PRIVATE ${link_libs})
+  target_compile_definitions(${lib_name} PRIVATE ${defines})
 
   # Include directories for the target; both public and internal
   target_include_directories(${lib_name}
