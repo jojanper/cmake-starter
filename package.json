@@ -4,7 +4,8 @@
   "description": "Node ffi wrapper for calling the options library",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "valgrind-tests": "cd build && ctest -T memcheck && cat Testing/Temporary/MemoryChecker.*.log",
+    "valgrind-logs": "cd build && cat Testing/Temporary/MemoryChecker.*.log"
   },
   "repository": {
     "type": "git",

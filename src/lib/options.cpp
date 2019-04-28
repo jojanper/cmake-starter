@@ -4,8 +4,7 @@
 
 namespace cdraal {
 
-bool
-Options::addOption()
+bool Options::addOption()
 {
     return true;
 }
