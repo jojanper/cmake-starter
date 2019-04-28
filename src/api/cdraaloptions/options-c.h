@@ -5,7 +5,7 @@
 /**
  * Options handle.
  */
-typedef void * CDraalOptionsHandle;
+typedef void *CDraalOptionsHandle;
 
 #ifdef __cplusplus
 extern "C" {

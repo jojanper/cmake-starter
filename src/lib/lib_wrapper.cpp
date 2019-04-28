@@ -1,8 +1,8 @@
 #include <stddef.h>
 #include <stdio.h>
 
-#include "cdraaloptions/options.h"
 #include "cdraaloptions/options-c.h"
+#include "cdraaloptions/options.h"
 
 CDraalOptionsHandle
 CDraalOpenOptions()
