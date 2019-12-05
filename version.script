@@ -1,0 +1,8 @@
+{
+global:
+    CDraalCloseOptions;
+    CDraalOpenOptions;
+    _ZN6cdraal7Options9addOptionEv;
+local:
+    *;
+};
