@@ -1,5 +1,7 @@
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+set(VERSION_SCRIPT "--version-script=${CMAKE_SOURCE_DIR}/version.script")
+
 if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3")
@@ -12,7 +14,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-missing-field-initializers -Wno-missing-braces")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-non-template-friend -Wno-missing-field-initializers -Wno-missing-braces")
 
-  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--exclude-libs,ALL,--gc-sections")
+  set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -Wl,--exclude-libs,ALL,--gc-sections,${VERSION_SCRIPT}")
 endif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
 
 if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")

@@ -15,6 +15,7 @@ cmake -H. -B./${BUILD_DIR} -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON -DCMAKE_BUILD_TYPE=$
 cd ${BUILD_DIR}
 cmake --build . --config ${BUILD_TYPE}
 objdump -T lib/libcdraaloptions.so
+nm -CD lib/libcdraaloptions.so
 
 # Test node integration
 node ../index .
